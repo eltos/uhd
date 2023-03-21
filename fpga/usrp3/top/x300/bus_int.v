@@ -47,6 +47,8 @@ module bus_int #(
     input SFPP1_ModAbs, input SFPP1_TxFault, input SFPP1_RxLOS, inout SFPP1_RS0, inout SFPP1_RS1,
     // Front-panel GPIO source
     output [23:0] fp_gpio_src,
+    // Dedicated GPIO signal
+    input DB1_TX_IO_15,
     // Clock control and status
     input [7:0] clock_status, output [7:0] clock_control, output [31:0] ref_freq, output ref_freq_changed,
     // SFP+ 0 data stream
@@ -814,6 +816,8 @@ module bus_int #(
     .radio_tx_stb_radio1            (radio_tx_stb[3:2]     ),
     .radio_tx_data_radio1           (radio_tx_data[127:64] ),
     .radio_tx_running_radio1        (radio_tx_running[3:2] ),
+    // Dedicated GPIO signal
+    .gpio_db1_tx_bank(DB1_TX_IO_15),
     // DRAM interface
     .axi_rst                 (ddr3_axi_rst),
     // Slave Interface Write Address Ports

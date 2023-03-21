@@ -57,6 +57,13 @@ radio:
     type: to-master
     width: 8
 
+# GPIO interface
+gpio:
+  type: broadcaster-listener
+  ports:
+  - name: gpio_bank
+    width: 1
+
 # AXI4 memory-mapped interface (up to 4 x 512-bit data and 48-bit address)
 axi4_mm:
   type: master-slave

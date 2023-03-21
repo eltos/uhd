@@ -1290,17 +1290,30 @@ module x300
    wire [31:0] db0_gpio_in, db0_gpio_out, db0_gpio_ddr;
    wire [31:0] db1_gpio_in, db1_gpio_out, db1_gpio_ddr;
    wire [31:0] fp_gpio_in, fp_gpio_out, fp_gpio_ddr;
-   wire        debug_txd, debug_rxd;
+   wire        debug_txd, debug_rxd, DB1_TX_IO_15;
 
    gpio_atr_io #(.WIDTH(32)) gpio_atr_db0_inst (
       .clk(radio_clk), .gpio_pins({DB0_TX_IO,DB0_RX_IO}),
       .gpio_ddr(db0_gpio_ddr), .gpio_out(db0_gpio_out), .gpio_in(db0_gpio_in)
    );
 
-   gpio_atr_io #(.WIDTH(32)) gpio_atr_db1_inst (
-      .clk(radio_clk), .gpio_pins({DB1_TX_IO,DB1_RX_IO}),
-      .gpio_ddr(db1_gpio_ddr), .gpio_out(db1_gpio_out), .gpio_in(db1_gpio_in)
+//`ifdef GPIO_DB1_TX_IO_RFNOC
+   // Dedicated GPIO signal
+   // Disconnected pin 15 and routed it through to be used by an RFNoC block instead
+   gpio_atr_io #(.WIDTH(31)) gpio_atr_db1_inst (
+      .clk(radio_clk), .gpio_pins({DB1_TX_IO[14:0],DB1_RX_IO}),
+      .gpio_ddr(db1_gpio_ddr[30:0]), .gpio_out(db1_gpio_out[30:0]), .gpio_in(db1_gpio_in[30:0])
    );
+   //assign db1_gpio_in[31] = 1'h0;
+   assign DB1_TX_IO_15 = DB0_TX_IO[15];
+   //assign DB1_TX_IO[0] = 1'bz;
+//`else
+//   // Default
+//   gpio_atr_io #(.WIDTH(32)) gpio_atr_db1_inst (
+//      .clk(radio_clk), .gpio_pins({DB1_TX_IO,DB1_RX_IO}),
+//      .gpio_ddr(db1_gpio_ddr), .gpio_out(db1_gpio_out), .gpio_in(db1_gpio_in)
+//   );
+//`endif
 
 `ifdef DEBUG_UART
    gpio_atr_io #(.WIDTH(10)) fp_gpio_atr_inst (
@@ -1341,6 +1354,8 @@ module x300
       .db1_gpio_in(db1_gpio_in), .db1_gpio_out(db1_gpio_out), .db1_gpio_ddr(db1_gpio_ddr),
       .sen1(sen1), .sclk1(sclk1), .mosi1(mosi1), .miso1(miso1),
       .radio_led1(led1), .radio1_misc_out(radio1_misc_out), .radio1_misc_in(radio1_misc_in),
+      // Dedicated GPIO signal
+      .DB1_TX_IO_15(DB1_TX_IO_15),
       // I2C bus
       .db_scl(DB_SCL), .db_sda(DB_SDA),
       // External clock gen

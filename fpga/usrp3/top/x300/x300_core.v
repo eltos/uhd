@@ -36,6 +36,8 @@ module x300_core #(
    // Radio shared misc
    inout db_scl,
    inout db_sda,
+   // Dedicated GPIO signal
+   input DB1_TX_IO_15,
    // Clock control
    input ext_ref_clk,
    output [1:0] clock_ref_sel,
@@ -315,6 +317,8 @@ module x300_core #(
       .SFPP1_RS0(SFPP1_RS0), .SFPP1_RS1(SFPP1_RS1),
       // Front-panel GPIO source
       .fp_gpio_src(sr_fp_gpio_src),
+      // Dedicated GPIO signal
+      .DB1_TX_IO_15(DB1_TX_IO_15),
       //clocky locky misc
       .clock_status({misc_clock_status, pps_detect, LMK_Holdover, LMK_Lock, LMK_Status}),
       .clock_control({1'b0, clock_misc_opt[1:0], pps_out_enb, pps_select[1:0], clock_ref_sel[1:0]}),

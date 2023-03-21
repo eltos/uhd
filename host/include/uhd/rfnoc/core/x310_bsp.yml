@@ -45,6 +45,12 @@ io_ports:
     rename:
       pattern: (.*)
       repl: \1_radio1
+  gpio_db1_tx:
+    type: gpio
+    drive: broadcaster
+    rename:
+      pattern: gpio_(.*)
+      repl: gpio_db1_tx_\1
   dram:
     type: axi4_mm
     drive: slave
