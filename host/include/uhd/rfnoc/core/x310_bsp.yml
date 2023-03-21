@@ -45,6 +45,19 @@ io_ports:
     rename:
       pattern: (.*)
       repl: \1_radio1
+  # Daughterboard GPIO
+  db0_gpio: # the srcport to be used in image_core.yml
+    type: db_gpio # the id from io_signatures.yml
+    drive: broadcaster
+    rename:
+      pattern: db_gpio_(.*) # the port names from io_signatures.yml (db_gpio_rx and db_gpio_tx)
+      repl: gpio_db0_\1 # the corresponding verilog signal in bus_int.v (gpio_db0_rx and gpio_db0_tx)
+  db1_gpio:
+    type: db_gpio
+    drive: broadcaster
+    rename:
+      pattern: db_gpio_(.*)
+      repl: gpio_db1_\1
   dram:
     type: axi4_mm
     drive: slave

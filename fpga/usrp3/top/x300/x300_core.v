@@ -317,6 +317,9 @@ module x300_core #(
       .SFPP1_RS0(SFPP1_RS0), .SFPP1_RS1(SFPP1_RS1),
       // Front-panel GPIO source
       .fp_gpio_src(sr_fp_gpio_src),
+      // Daughterboard GPIO (as input)
+      .gpio_db0(db0_gpio_in),
+      .gpio_db1(db1_gpio_in),
       //clocky locky misc
       .clock_status({misc_clock_status, pps_detect, LMK_Holdover, LMK_Lock, LMK_Status}),
       .clock_control({1'b0, clock_misc_opt[1:0], pps_out_enb, pps_select[1:0], clock_ref_sel[1:0]}),
