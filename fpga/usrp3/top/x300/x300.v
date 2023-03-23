@@ -1304,15 +1304,23 @@ module x300
       .clk(radio_clk), .gpio_pins({DB1_TX_IO[14:0],DB1_RX_IO}),
       .gpio_ddr(db1_gpio_ddr[30:0]), .gpio_out(db1_gpio_out[30:0]), .gpio_in(db1_gpio_in[30:0])
    );
-   //assign db1_gpio_in[31] = 1'h0;
-   assign DB1_TX_IO_15 = DB0_TX_IO[15];
-   //assign DB1_TX_IO[0] = 1'bz;
+   assign db1_gpio_in[31] = 1'h0;
+   // Dedicated IO Buffer
+   IOBUF IOBUF_DB1_TX_IO_15_inst (
+       .IO(DB1_TX_IO[15]), // GPIO
+       .O(DB1_TX_IO_15),   // input signal
+       .I(1'b0),           // output signal
+       .T(1'b1)            // direction (1 = input, 0 = output)
+   );
+   //assign DB1_TX_IO_15 = DB0_TX_IO[15];
+
 //`else
 //   // Default
 //   gpio_atr_io #(.WIDTH(32)) gpio_atr_db1_inst (
 //      .clk(radio_clk), .gpio_pins({DB1_TX_IO,DB1_RX_IO}),
 //      .gpio_ddr(db1_gpio_ddr), .gpio_out(db1_gpio_out), .gpio_in(db1_gpio_in)
 //   );
+//
 //`endif
 
 `ifdef DEBUG_UART
