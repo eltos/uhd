@@ -317,9 +317,15 @@ module x300_core #(
       .SFPP1_RS0(SFPP1_RS0), .SFPP1_RS1(SFPP1_RS1),
       // Front-panel GPIO source
       .fp_gpio_src(sr_fp_gpio_src),
-      // Daughterboard GPIO (as input)
-      .gpio_db0(db0_gpio_in),
-      .gpio_db1(db1_gpio_in),
+      // Daughterboard GPIO to/from blocks
+      .db0_gpio_in(db0_gpio_in),
+      .db0_gpio_ctr(db_gpio_blkctr[0]),
+      .db0_gpio_ddr(db_gpio_blkddr[0]),
+      .db0_gpio_out(db_gpio_blkout[0]),
+      .db1_gpio_in(db1_gpio_in),
+      .db1_gpio_ctr(db_gpio_blkctr[1]),
+      .db1_gpio_ddr(db_gpio_blkddr[1]),
+      .db1_gpio_out(db_gpio_blkout[1]),
       //clocky locky misc
       .clock_status({misc_clock_status, pps_detect, LMK_Holdover, LMK_Lock, LMK_Status}),
       .clock_control({1'b0, clock_misc_opt[1:0], pps_out_enb, pps_select[1:0], clock_ref_sel[1:0]}),
@@ -535,6 +541,7 @@ module x300_core #(
    wire [31:0] leds[0:NUM_DBOARDS-1];
    wire [31:0] fp_gpio_r_in[0:NUM_DBOARDS-1], fp_gpio_r_out[0:NUM_DBOARDS-1], fp_gpio_r_ddr[0:NUM_DBOARDS-1];
    wire [31:0] db_gpio_in[0:NUM_DBOARDS-1], db_gpio_out[0:NUM_DBOARDS-1], db_gpio_ddr[0:NUM_DBOARDS-1];
+   wire [31:0] db_gpio_blkctr[0:NUM_DBOARDS-1], db_gpio_blkout[0:NUM_DBOARDS-1], db_gpio_blkddr[0:NUM_DBOARDS-1];
    wire [31:0] misc_outs[0:NUM_DBOARDS-1];
    reg  [31:0] misc_ins[0:NUM_DBOARDS-1];
    wire [24:0] sr_fp_gpio_src, fp_gpio_src;
@@ -696,10 +703,11 @@ module x300_core #(
 
    //Daughter board GPIO
    assign {db_gpio_in[1], db_gpio_in[0]} = {db1_gpio_in, db0_gpio_in};
-   assign db0_gpio_out = db_gpio_out[0];
-   assign db1_gpio_out = db_gpio_out[1];
-   assign db0_gpio_ddr = db_gpio_ddr[0];
-   assign db1_gpio_ddr = db_gpio_ddr[1];
+   // where blkctr bits are set, use blkout/blkddr signals instead of out/ddr signals
+   assign db0_gpio_out = (db_gpio_blkctr[0] & db_gpio_blkout[0]) | (~db_gpio_blkctr[0] & db_gpio_out[0]);
+   assign db1_gpio_out = (db_gpio_blkctr[1] & db_gpio_blkout[1]) | (~db_gpio_blkctr[1] & db_gpio_out[1]);
+   assign db0_gpio_ddr = (db_gpio_blkctr[0] & db_gpio_blkddr[0]) | (~db_gpio_blkctr[0] & db_gpio_ddr[0]);
+   assign db1_gpio_ddr = (db_gpio_blkctr[1] & db_gpio_blkddr[1]) | (~db_gpio_blkctr[1] & db_gpio_ddr[1]);
 
    //SPI
    assign {sen0, sclk0, mosi0} = {sen[0], sclk[0], mosi[0]};

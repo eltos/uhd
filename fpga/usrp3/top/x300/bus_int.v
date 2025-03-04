@@ -49,8 +49,14 @@ module bus_int #(
     // Front-panel GPIO source
     output [23:0] fp_gpio_src,
     // Daughterboard GPIO
-    input [31:0] gpio_db0,
-    input [31:0] gpio_db1,
+    input  [31:0] db0_gpio_in,
+    output [31:0] db0_gpio_ctr,
+    output [31:0] db0_gpio_ddr,
+    output [31:0] db0_gpio_out,
+    input  [31:0] db1_gpio_in,
+    output [31:0] db1_gpio_ctr,
+    output [31:0] db1_gpio_ddr,
+    output [31:0] db1_gpio_out,
     // Clock control and status
     input [7:0] clock_status, output [7:0] clock_control, output [31:0] ref_freq, output ref_freq_changed,
     // SFP+ 0 data stream
@@ -820,10 +826,22 @@ module bus_int #(
     .radio_tx_data_radio1           (radio_tx_data[127:64] ),
     .radio_tx_running_radio1        (radio_tx_running[3:2] ),
     // Daughterboard GPIO
-    .gpio_db0_rx                    (gpio_db0[0+:16]),
-    .gpio_db0_tx                    (gpio_db0[16+:16]),
-    .gpio_db1_rx                    (gpio_db1[0+:16]),
-    .gpio_db1_tx                    (gpio_db1[16+:16]),
+    .gpio_db0_rx_in                 (db0_gpio_in[0+:16]),
+    .gpio_db0_rx_ctr                (db0_gpio_ctr[0+:16]),
+    .gpio_db0_rx_ddr                (db0_gpio_ddr[0+:16]),
+    .gpio_db0_rx_out                (db0_gpio_out[0+:16]),
+    .gpio_db0_tx_in                 (db0_gpio_in[16+:16]),
+    .gpio_db0_tx_ctr                (db0_gpio_ctr[16+:16]),
+    .gpio_db0_tx_ddr                (db0_gpio_ddr[16+:16]),
+    .gpio_db0_tx_out                (db0_gpio_out[16+:16]),
+    .gpio_db1_rx_in                 (db1_gpio_in[0+:16]),
+    .gpio_db1_rx_ctr                (db1_gpio_ctr[0+:16]),
+    .gpio_db1_rx_ddr                (db1_gpio_ddr[0+:16]),
+    .gpio_db1_rx_out                (db1_gpio_out[0+:16]),
+    .gpio_db1_tx_in                 (db1_gpio_in[16+:16]),
+    .gpio_db1_tx_ctr                (db1_gpio_ctr[16+:16]),
+    .gpio_db1_tx_ddr                (db1_gpio_ddr[16+:16]),
+    .gpio_db1_tx_out                (db1_gpio_out[16+:16]),
     // DRAM interface
     .axi_rst                 (ddr3_axi_rst),
     // Slave Interface Write Address Ports
