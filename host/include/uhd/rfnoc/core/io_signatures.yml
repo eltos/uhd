@@ -57,6 +57,19 @@ radio:
     type: to-master
     width: 32
 
+# Daughterboard GPIO interface
+db_gpio:
+  type: broadcaster-listener
+  ports:
+  - name: gpio_ctr
+    width: 16
+  - name: gpio_ddr
+    width: 16
+  - name: gpio_in
+    width: 16
+  - name: gpio_out
+    width: 16
+
 # AXI4 memory-mapped interface (up to 8 x 512-bit data and 48-bit address)
 axi4_mm:
   type: master-slave
