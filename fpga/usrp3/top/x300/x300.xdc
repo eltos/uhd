@@ -195,6 +195,7 @@ set_property PACKAGE_PIN   E30      [get_ports {DB0_RX_IO[13]}]
 set_property PACKAGE_PIN   E29      [get_ports {DB0_RX_IO[14]}]
 set_property PACKAGE_PIN   A30      [get_ports {DB0_RX_IO[15]}]
 set_property IOSTANDARD    LVCMOS33 [get_ports {DB0_RX_IO*}]
+set_property PULLDOWN      TRUE     [get_ports {DB0_RX_IO*}]
 
 set_property PACKAGE_PIN   B25      [get_ports {DB0_TX_IO[0]}]
 set_property PACKAGE_PIN   C25      [get_ports {DB0_TX_IO[1]}]
@@ -213,6 +214,7 @@ set_property PACKAGE_PIN   G23      [get_ports {DB0_TX_IO[13]}]
 set_property PACKAGE_PIN   E26      [get_ports {DB0_TX_IO[14]}]
 set_property PACKAGE_PIN   F26      [get_ports {DB0_TX_IO[15]}]
 set_property IOSTANDARD    LVCMOS33 [get_ports {DB0_TX_IO*}]
+set_property PULLDOWN      TRUE     [get_ports {DB0_TX_IO*}]
 
 #*******************************************************************************
 ## DB1 GPIO
@@ -234,6 +236,7 @@ set_property PACKAGE_PIN   C11      [get_ports {DB1_RX_IO[13]}]
 set_property PACKAGE_PIN   D11      [get_ports {DB1_RX_IO[14]}]
 set_property PACKAGE_PIN   A12      [get_ports {DB1_RX_IO[15]}]
 set_property IOSTANDARD    LVCMOS33 [get_ports {DB1_RX_IO*}]
+set_property PULLDOWN      TRUE     [get_ports {DB1_RX_IO*}]
 
 set_property PACKAGE_PIN   F13      [get_ports {DB1_TX_IO[0]}]
 set_property PACKAGE_PIN   G13      [get_ports {DB1_TX_IO[1]}]
@@ -252,6 +255,7 @@ set_property PACKAGE_PIN   L11      [get_ports {DB1_TX_IO[13]}]
 set_property PACKAGE_PIN   J14      [get_ports {DB1_TX_IO[14]}]
 set_property PACKAGE_PIN   K14      [get_ports {DB1_TX_IO[15]}]
 set_property IOSTANDARD    LVCMOS33 [get_ports {DB1_TX_IO*}]
+set_property PULLDOWN      TRUE     [get_ports {DB1_TX_IO*}]
 
 #*******************************************************************************
 ## DB0 SPI
